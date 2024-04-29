@@ -49,17 +49,14 @@ CREATE TABLE attendance(
     foreign key(people_id) references people(id)
 );
 
-CREATE TABLE time_test(
-    id serial not null primary key,
-    date_checked_in varchar(255),
-    time_checked_in varchar(255)
-);
-
 CREATE TABLE time_ledger(
     id serial not null primary key,
     date_checked_in varchar(255),
-    date_chacked_out varchar(255),
+    date_checked_out varchar(255),
     status boolean,
     time_checked_in varchar(255),
-    time_checked_out varchar(255)
+    time_checked_out varchar(255),
+    attendance_id int,
+
+    foreign key(attendance_id) references  attendance(id)
 );

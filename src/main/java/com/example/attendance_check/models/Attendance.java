@@ -16,5 +16,5 @@ public class Attendance {
     AggregateReference<Company, Integer> company_id;
     AggregateReference<CompanyDepartment, Integer> companydepartment_id;
     AggregateReference<Department, Integer> department_id;
-    AggregateReference<People, Integer> people_id;
+    AggregateReference<People, Integer> peopleId;
 }

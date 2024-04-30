@@ -15,5 +15,5 @@ public class TimeLedger {
     private boolean status;
     private String timeCheckedIn;
     private String timeCheckedOut;
-    AggregateReference<Attendance, Integer> attendance_id;
+    AggregateReference<Attendance, Integer> attendanceId;
 }

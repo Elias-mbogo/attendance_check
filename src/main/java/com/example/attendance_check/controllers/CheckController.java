@@ -16,8 +16,13 @@ public class CheckController {
         this.checkService = checkService;
     }
 
-    @PostMapping("/check")
-    public TimeLedger getCheckResults(@RequestBody PeopleNationalid peopleNationalid){
-        return  checkService.getCheckIn(peopleNationalid);
+    @PostMapping("/check_in")
+    public Check checkIn(@RequestBody PeopleNationalid peopleNationalid){
+        return checkService.getCheckIn(peopleNationalid);
+    }
+
+    @PostMapping("/check_out")
+    public Check checkOut(@RequestBody PeopleNationalid peopleNationalid){
+        return checkService.getCheckOut(peopleNationalid);
     }
 }

@@ -13,6 +13,7 @@ import com.example.attendance_check.repositories.TimeLedgerRepository;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +34,7 @@ public class CheckService {
         this.timeLedgerRepository = timeLedgerRepository;
     }
 
-    public TimeLedger getCheckIn(PeopleNationalid peopleNationalid){
+    public Check getCheckIn(PeopleNationalid peopleNationalid){
         People people = peopleRepository.findByNationalid(peopleNationalid.getNationalid());
         AggregateReference<People, Integer> peopleId = AggregateReference.to(people.getId());
         Attendance attendance = attendanceRepository.findByPeopleId(peopleId);
@@ -49,10 +50,34 @@ public class CheckService {
         String formattedDate = dateFormatter.format(date);
         String formattedTime = timeFormatter.format(time);
 
-        return timeLedgerRepository.save(new TimeLedger(null, formattedDate, null, true, formattedTime, null, AggregateReference.to(attendance.getId())));
+        timeLedgerRepository.save(new TimeLedger(null, formattedDate, null, true, formattedTime, null, AggregateReference.to(attendance.getId())));
 
-        //new Check(people.getUsername(), companyResult.getNames(), formattedDate, formattedTime);
+        return new Check(people.getUsername(), companyResult.getNames(), formattedDate, formattedTime);
 
+    }
+
+    public Check getCheckOut(PeopleNationalid peopleNationalid){
+        People people = peopleRepository.findByNationalid(peopleNationalid.getNationalid());
+        AggregateReference<People, Integer> peopleId = AggregateReference.to(people.getId());
+        Attendance attendance = attendanceRepository.findByPeopleId(peopleId);
+        AggregateReference<Company, Integer> companyId = attendance.getCompany_id();
+        Optional<Company> company = companyRepository.findById(companyId.getId());
+        Company companyResult = company.get();
+
+        TimeLedger checkOutTime = timeLedgerRepository.findFirstByOrderByAttendanceIdAsc(AggregateReference.to(attendance.getId()));
+
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        String formattedDate = dateFormatter.format(date);
+        String formattedTime = timeFormatter.format(time);
+
+        timeLedgerRepository.save(new TimeLedger(checkOutTime.getId(), checkOutTime.getDateCheckedIn(),
+                formattedDate, false, checkOutTime.getTimeCheckedIn(), formattedTime, checkOutTime.getAttendanceId()));
+
+        return new Check(people.getUsername(), companyResult.getNames(), formattedDate, formattedTime);
     }
 
 

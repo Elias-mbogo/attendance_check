@@ -60,3 +60,20 @@ CREATE TABLE time_ledger(
 
     foreign key(attendance_id) references  attendance(id)
 );
+
+CREATE TABLE laptop(
+    id serial not null primary key,
+    model_type text,
+    serial_no text,
+    people_id int,
+
+    foreign key(people_id) references people(id)
+);
+
+CREATE TABLE key(
+    id serial not null primary key,
+    number int,
+    people_id int,
+
+    foreign key(people_id) references people("id")
+)

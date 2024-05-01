@@ -1,6 +1,5 @@
 package com.example.attendance_check.controllers;
 
-import com.example.attendance_check.models.TimeLedger;
 import com.example.attendance_check.models.dtos.Check;
 import com.example.attendance_check.models.dtos.PeopleNationalid;
 import com.example.attendance_check.services.CheckService;
@@ -16,9 +15,11 @@ public class CheckController {
         this.checkService = checkService;
     }
 
-    @PostMapping("/check_in")
+    //CHECK INS
+    //Check in visitor
+    @PostMapping("/check_in_visitor")
     public Check checkIn(@RequestBody PeopleNationalid peopleNationalid){
-        return checkService.getCheckIn(peopleNationalid);
+        return checkService.getVisitorCheckIn(peopleNationalid);
     }
 
     @PostMapping("/check_out")

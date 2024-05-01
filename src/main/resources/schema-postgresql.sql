@@ -57,8 +57,12 @@ CREATE TABLE time_ledger(
     time_checked_in varchar(255),
     time_checked_out varchar(255),
     attendance_id int,
+    laptop_id int,
+    key_id int,
 
-    foreign key(attendance_id) references  attendance(id)
+    foreign key(attendance_id) references  attendance(id),
+    foreign key(laptop_id) references laptop(id),
+    foreign  key(key_id) references key(id)
 );
 
 CREATE TABLE laptop(

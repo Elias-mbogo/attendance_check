@@ -10,5 +10,5 @@ public class Laptop {
     private Integer id;
     private String modelType;
     private String serialNo;
-    AggregateReference<People, Integer> people_id;
+    AggregateReference<People, Integer> peopleId;
 }

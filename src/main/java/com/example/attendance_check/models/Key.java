@@ -9,6 +9,6 @@ public class Key {
     @Id
     private Integer id;
     private Integer number;
-    AggregateReference<People, Integer> people_id;
+    AggregateReference<People, Integer> peopleId;
 
 }

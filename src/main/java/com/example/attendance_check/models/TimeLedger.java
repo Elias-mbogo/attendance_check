@@ -16,4 +16,6 @@ public class TimeLedger {
     private String timeCheckedIn;
     private String timeCheckedOut;
     AggregateReference<Attendance, Integer> attendanceId;
+    AggregateReference<Laptop, Integer> laptopId;
+    AggregateReference<Key, Integer> keyId;
 }

@@ -1,7 +1,7 @@
 package com.example.attendance_check.services;
 
 import com.example.attendance_check.models.*;
-import com.example.attendance_check.models.dtos.Check;
+import com.example.attendance_check.models.dtos.CheckVisitor;
 import com.example.attendance_check.models.dtos.PeopleNationalid;
 import com.example.attendance_check.repositories.*;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
@@ -35,7 +35,7 @@ public class CheckService {
 
     //CHECK INS
     //Check in visitor
-    public Check getVisitorCheckIn(PeopleNationalid peopleNationalid){
+    public CheckVisitor getVisitorCheckIn(PeopleNationalid peopleNationalid){
         People people = peopleRepository.findByNationalid(peopleNationalid.getNationalid());
         AggregateReference<People, Integer> peopleId = AggregateReference.to(people.getId());
         Attendance attendance = attendanceRepository.findByPeopleId(peopleId);
@@ -54,7 +54,7 @@ public class CheckService {
         timeLedgerRepository.save(new TimeLedger(null, formattedDate, null, true, formattedTime,
                 null, AggregateReference.to(attendance.getId()), null, null));
 
-        return new Check(people.getUsername(), companyResult.getNames(), formattedDate, formattedTime);
+        return new CheckVisitor(people.getUsername(), companyResult.getNames(), formattedDate, formattedTime);
 
     }
     //Check in Laptop
@@ -93,7 +93,7 @@ public class CheckService {
     }
 
 
-    public Check getCheckOut(PeopleNationalid peopleNationalid){
+    public CheckVisitor getCheckOut(PeopleNationalid peopleNationalid){
         People people = peopleRepository.findByNationalid(peopleNationalid.getNationalid());
         AggregateReference<People, Integer> peopleId = AggregateReference.to(people.getId());
         Attendance attendance = attendanceRepository.findByPeopleId(peopleId);
@@ -114,7 +114,7 @@ public class CheckService {
         timeLedgerRepository.save(new TimeLedger(checkOutTime.getId(), checkOutTime.getDateCheckedIn(),
                 formattedDate, false, checkOutTime.getTimeCheckedIn(), formattedTime, checkOutTime.getAttendanceId(), null, null));
 
-        return new Check(people.getUsername(), companyResult.getNames(), formattedDate, formattedTime);
+        return new CheckVisitor(people.getUsername(), companyResult.getNames(), formattedDate, formattedTime);
     }
 
 

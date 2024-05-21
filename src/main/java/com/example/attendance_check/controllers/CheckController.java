@@ -1,6 +1,8 @@
 package com.example.attendance_check.controllers;
 
-import com.example.attendance_check.models.TimeLedger;
+
+import com.example.attendance_check.models.dtos.CheckKey;
+import com.example.attendance_check.models.dtos.CheckLaptop;
 import com.example.attendance_check.models.dtos.CheckVisitor;
 import com.example.attendance_check.models.dtos.PeopleNationalid;
 import com.example.attendance_check.services.CheckService;
@@ -24,17 +26,27 @@ public class CheckController {
     }
     //Check in laptop
     @PostMapping("/check_in_laptop")
-    public TimeLedger postLaptopCheckIn(@RequestBody PeopleNationalid peopleNationalid){
+    public CheckLaptop postLaptopCheckIn(@RequestBody PeopleNationalid peopleNationalid){
         return checkService.getLaptopCheckIn(peopleNationalid);
     }
     //Check in key
     @PostMapping("/check_in_key")
-    public TimeLedger postKeyCheckIn(@RequestBody PeopleNationalid peopleNationalid){
+    public CheckKey postKeyCheckIn(@RequestBody PeopleNationalid peopleNationalid){
         return checkService.getKeyCheckIn(peopleNationalid);
     }
 
-    @PostMapping("/check_out")
-    public CheckVisitor checkOut(@RequestBody PeopleNationalid peopleNationalid){
-        return checkService.getCheckOut(peopleNationalid);
+    @PostMapping("/check_out_visitor")
+    public CheckVisitor postVisitorCheckOut(@RequestBody PeopleNationalid peopleNationalid){
+        return checkService.getVisitorCheckOut(peopleNationalid);
+    }
+
+    @PostMapping("/check_out_laptop")
+    public CheckLaptop postLaptopCheckOut(@RequestBody PeopleNationalid peopleNationalid){
+        return checkService.getLaptopCheckOut(peopleNationalid);
+    }
+
+    @PostMapping("/check_out_key")
+    public CheckKey postKeyCheckOut(@RequestBody PeopleNationalid peopleNationalid){
+        return checkService.getKeyCheckOut(peopleNationalid);
     }
 }

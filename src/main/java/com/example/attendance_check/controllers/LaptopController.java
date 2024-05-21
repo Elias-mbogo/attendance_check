@@ -1,6 +1,7 @@
 package com.example.attendance_check.controllers;
 
 import com.example.attendance_check.models.Laptop;
+import com.example.attendance_check.models.dtos.LaptopDetails;
 import com.example.attendance_check.services.LaptopService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ public class LaptopController {
     }
 
     @PostMapping("/laptop")
-    public Laptop postLaptop(@RequestBody Laptop laptop){
+    public LaptopDetails postLaptop(@RequestBody LaptopDetails laptop){
         return laptopService.addLaptop(laptop);
     }
 }

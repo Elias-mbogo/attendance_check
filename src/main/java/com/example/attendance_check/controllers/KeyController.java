@@ -1,7 +1,8 @@
 package com.example.attendance_check.controllers;
 
-import com.example.attendance_check.models.Key;
+import com.example.attendance_check.models.dtos.KeyDetails;
 import com.example.attendance_check.services.KeyService;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,7 +13,8 @@ public class KeyController {
         this.keyService = keyService;
     }
 
-    public Key postKey(Key key){
+    @PostMapping("/key")
+    public KeyDetails postKey(KeyDetails key){
         return  keyService.addKey(key);
     }
 }
